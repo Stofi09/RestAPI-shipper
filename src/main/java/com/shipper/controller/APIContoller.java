@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shipper.domain.DeliveryList;
 import com.shipper.domain.Equipment;
 import com.shipper.responses.Message;
+import com.shipper.responses.UserRegister;
+import com.shipper.service.CustomUserService;
 import com.shipper.service.DeliveryListService;
 import com.shipper.service.EquipmentService;
 
@@ -26,7 +28,7 @@ public class APIContoller {
 	
 	private EquipmentService equipmentService; 
 	private DeliveryListService deliveryService;
-	
+	private CustomUserService userService;
 
 	
 	@Autowired
@@ -38,7 +40,11 @@ public class APIContoller {
 	public void setDeliveryService(DeliveryListService deliveryService) {
 		this.deliveryService=deliveryService;
 	}
-	
+	 
+	@Autowired
+	public void setCustomUserService(CustomUserService userService) {
+		this.userService=userService;
+	}
 	
 	/*List*/
 	
@@ -96,7 +102,12 @@ public class APIContoller {
 	}
 	
 	
-
+/* Register */
+	@PostMapping("/register")
+	public String postRegister(@RequestBody UserRegister user) {
+		userService.createUser(user);
+		return "asd";
+	}
 	
 
 	
