@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.shipper.domain.Authority;
 import com.shipper.domain.User;
+import com.shipper.repository.AuthorityRepository;
 import com.shipper.repository.UserDetailsRepository;
 import com.shipper.responses.UserRegister;
 
@@ -26,9 +27,12 @@ public class CustomUserService implements UserDetailsService {
 	UserDetailsRepository userDetailsRepository;
 	
 	@Autowired
+	AuthorityRepository autRepository;
+	
+	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-	List<Authority> authorityList;
+	
+	
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -40,19 +44,15 @@ public class CustomUserService implements UserDetailsService {
 		return user;
 	}
 	
-	private Authority setAuthority(String roleCode,String roleDescription) {
-		Authority authority=new Authority();
-		authority.setRole(roleCode);
-		authority.setRoleDescription(roleDescription);
-		return authority;
-	}
+	
 	public Boolean createUser(UserRegister userToRegister) {
+		Long i = (long) 1;
 		boolean result = false; 
-		String role = "USER";
-		String role2 = "user role";
+		List<Authority> authorityList = new ArrayList<>();
+		// Set the role at the beginning as a user.
+		authorityList.add(autRepository.findByRole("USER"));
+		System.out.println();
 		if (userDetailsRepository.findByUserName(userToRegister.getUserName())== null) {
-			authorityList=new ArrayList<>();
-			authorityList.add(setAuthority(role,role2));
 			User user = new User();
 			user.setFirstName(userToRegister.getUserName());
 			user.setEmail(userToRegister.getEmail());
@@ -74,7 +74,9 @@ public class CustomUserService implements UserDetailsService {
 	}
 	
 	private void createUser(String userName, String role, String role2, String password) {
-		List<Authority> authorityList=new ArrayList<>();
+		
+		List<Authority> authorityList = new ArrayList<>();
+		
 		authorityList.add(createAuthority(role,role2));
 		User user=new User();
 		user.setUserName(userName);
