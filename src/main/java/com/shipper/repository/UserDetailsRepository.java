@@ -15,5 +15,7 @@ public interface UserDetailsRepository extends JpaRepository<User, Long> {
 	User findByUserName(String userName);
 	
 	List<User> findAll();
+
+	User findFirstById(Long id);
 	
 }

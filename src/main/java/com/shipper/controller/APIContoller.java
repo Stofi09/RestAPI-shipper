@@ -133,4 +133,11 @@ public class APIContoller {
 }
 
 	
+	@PutMapping("/updateUser")
+	public String updateUser(@RequestBody UserInfo message){ 
+		System.out.println(message.getRoles());
+		System.out.println(message.getId());
+		userService.updateUser(message);
+		return "sik";
+	}
 }

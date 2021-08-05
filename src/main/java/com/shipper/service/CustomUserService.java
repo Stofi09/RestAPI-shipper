@@ -16,6 +16,7 @@ import com.shipper.domain.Authority;
 import com.shipper.domain.User;
 import com.shipper.repository.AuthorityRepository;
 import com.shipper.repository.UserDetailsRepository;
+import com.shipper.responses.UserInfo;
 import com.shipper.responses.UserRegister;
 
 
@@ -32,7 +33,7 @@ public class CustomUserService implements UserDetailsService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	
+	private User user;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -44,6 +45,9 @@ public class CustomUserService implements UserDetailsService {
 		return user;
 	}
 	
+	public List<User> getAllUser(){
+		return userDetailsRepository.findAll();
+	}
 	
 	public Boolean createUser(UserRegister userToRegister) {
 		Long i = (long) 1;
@@ -88,11 +92,30 @@ public class CustomUserService implements UserDetailsService {
 		
 	}
 	
+	
+	
 	private Authority createAuthority(String roleCode,String roleDescription) {
 		Authority authority=new Authority();
 		authority.setRole(roleCode);
 		authority.setRoleDescription(roleDescription);
 		return authority;
+	}
+
+	public void updateUser(UserInfo message) {
+		List<Authority> authorityList = new ArrayList<>();
+		if (message.getRoles().toString().contains("USER")) {
+			authorityList.add(autRepository.findByRole("USER"));
+		}
+		if (message.getRoles().toString().contains("ADMIN")) {
+			authorityList.add(autRepository.findByRole("ADMIN"));
+		}
+		user = userDetailsRepository.findFirstById(message.getId());
+		if (authorityList.isEmpty()) {
+			System.out.println("This is empty");
+		}else {
+			user.setAuthorities(authorityList);
+		}
+		userDetailsRepository.save(user);
 	}
 
 }
