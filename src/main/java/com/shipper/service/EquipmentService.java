@@ -75,7 +75,7 @@ public class EquipmentService {
 	
 	public void updateList(Message message) {
 		if (MessageValidator.isValidEquipment(message.getName(),message.getQuantity(), message.getId())) {
-				equipment = equipmentRepo.findFirstById(message.getId());
+		equipment = equipmentRepo.findFirstById(message.getId());
 		equipment.setName(message.getName());
 		equipment.setQuantity(message.getQuantity());
 		equipmentRepo.save(equipment);
