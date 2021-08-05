@@ -2,6 +2,15 @@ package com.shipper.responses;
 
 public class UserInfo {
 	
+	private Long id;
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	private String firstName;
 	private String lastName;
 	private String userName;

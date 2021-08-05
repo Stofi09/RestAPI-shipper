@@ -1,5 +1,6 @@
 package com.shipper.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shipper.domain.DeliveryList;
 import com.shipper.domain.Equipment;
+import com.shipper.domain.User;
 import com.shipper.responses.Message;
+import com.shipper.responses.UserInfo;
 import com.shipper.responses.UserRegister;
 import com.shipper.service.CustomUserService;
 import com.shipper.service.DeliveryListService;
@@ -102,15 +105,32 @@ public class APIContoller {
 	}
 	
 	
-/* Register */
+ /* Register */
 	@PostMapping("/register")
 	public String postRegister(@RequestBody UserRegister user) {
 		userService.createUser(user);
 		return "asd";
 	}
 	
-
+ /* User requests */
 	
+	@GetMapping("/getusers")
+	public List<UserInfo> getUsers() {
+		List<User> users =userService.getAllUser();
+		List<UserInfo>infos = new ArrayList<>();
+		UserInfo inf = new UserInfo();
+		UserInfo inf2 = new UserInfo();
+		inf.setUserName(users.get(0).getUserName());
+		inf.setId(users.get(0).getId());
+		inf.setRoles(users.get(0).getAuthorities().toString());
+		
+		inf2.setUserName(users.get(1).getUserName());
+		inf2.setId(users.get(1).getId());
+		inf2.setRoles(users.get(1).getAuthorities().toString());
+		infos.add(inf);
+		infos.add(inf2);
+		return infos;
+}
 
 	
 }
