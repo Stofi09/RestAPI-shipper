@@ -63,7 +63,7 @@ public class EquipmentService {
 	
 	public void createDeliveryList(String name, String eq) {
 		if (MessageValidator.areStringsValid(name, eq)) {
-				DeliveryList delivery = new DeliveryList(name,"Halux",0);
+				DeliveryList delivery = new DeliveryList(name,"Halux",0,false);
 		deliveryRepository.save(delivery);	
 		Equipment equipment = new Equipment(eq, 6,delivery);
 		equipmentRepo.save(equipment);

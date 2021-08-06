@@ -55,7 +55,7 @@ public class DeliveryListService {
 	}
 	public Long createDeliveryList(String driver, String supplier) {
 		if (MessageValidator.areStringsValid(driver, supplier)) {
-		DeliveryList delivery = new DeliveryList(driver,supplier,0);
+		DeliveryList delivery = new DeliveryList(driver,supplier,0,false);
 		deliveryRepository.save(delivery);
 		return delivery.getId();
 		} else {

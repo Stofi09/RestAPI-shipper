@@ -20,7 +20,8 @@ public class DeliveryList {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	
+	/*isCompleted causes syntax error*/
+	private Boolean iscompleted;
 	private String driver;
 	private String supplier;
 	/*If the Integer's name is quantitySum I got a syntax error exception.*/
@@ -33,10 +34,11 @@ public class DeliveryList {
 	
 	private DeliveryList() {}
 	
-	public DeliveryList(String driver, String supplier, Integer sum) {
+	public DeliveryList(String driver, String supplier, Integer sum,Boolean isComplete) {
 		this.driver = driver;
 		this.supplier = supplier;
 		this.quantitysum = sum;
+		this.iscompleted = isComplete;
 	}
 
 
@@ -90,12 +92,29 @@ public class DeliveryList {
 		this.quantitysum = quantitySum;
 	}
 
-	@Override
-	public String toString() {
-		return "DeliveryList [id=" + id + ", driver=" + driver + ", supplier=" + supplier + ", equipments=" + equipments
-				+ ", quantitySum=" + quantitysum + "]";
+	public Boolean getIsCompleted() {
+		return iscompleted;
 	}
 
+	public void setIsCompleted(Boolean isCompleted) {
+		this.iscompleted = isCompleted;
+	}
+
+	public Integer getQuantitysum() {
+		return quantitysum;
+	}
+
+	public void setQuantitysum(Integer quantitysum) {
+		this.quantitysum = quantitysum;
+	}
+
+	@Override
+	public String toString() {
+		return "DeliveryList [id=" + id + ", isCompleted=" + iscompleted + ", driver=" + driver + ", supplier="
+				+ supplier + ", quantitysum=" + quantitysum + ", equipments=" + equipments + "]";
+	}
+
+	
 
 
 
