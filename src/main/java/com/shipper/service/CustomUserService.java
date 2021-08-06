@@ -118,4 +118,9 @@ public class CustomUserService implements UserDetailsService {
 		userDetailsRepository.save(user);
 	}
 
+	public void deleteEquipment(Long id) {
+		userDetailsRepository.deleteById(id);
+		
+	}
+
 }

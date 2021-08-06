@@ -140,4 +140,11 @@ public class APIContoller {
 		userService.updateUser(message);
 		return "sik";
 	}
+	
+	@DeleteMapping("/deleteUser/{id}")
+	public String deleteUser(@PathVariable Long id){ 
+		System.out.println("bent");
+		userService.deleteEquipment(id);
+		return "deleteEquipment";
+	}
 }
