@@ -81,16 +81,6 @@ public class DeliveryList {
 		this.equipments = equipments;
 	}
 
-	
-	
-
-	public Integer getQuantitySum() {
-		return quantitysum;
-	}
-
-	public void setQuantitySum(Integer quantitySum) {
-		this.quantitysum = quantitySum;
-	}
 
 	public Boolean getIsCompleted() {
 		return iscompleted;
