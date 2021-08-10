@@ -32,12 +32,11 @@ public class DeliveryListService {
 	public List<DeliveryList> getDeliveries() {
 		List<DeliveryList> lists = new ArrayList<>();
 		lists = deliveryRepository.findAll();
-		lists.forEach((l)->l.setQuantitySum(getQuantitySum(l.getId()))); // Checks how many equipment is in the list. 
+		setQuantity(lists);
+	//	lists.forEach((l)->l.setQuantitySum(getQuantitySum(l.getId()))); // Checks how many equipment is in the list. 
 		return  deliveryRepository.findAll();
 	}
-	private int getQuantitySum(Long id) {
-		return equipmentRepo.findAllByDeliveryListId(id).size();
-	}
+	
 	public List<DeliveryList> getDeliveriesById(String driver) {
 		if(MessageValidator.isNotEmpty(driver)) {
 			return  deliveryRepository.findAllByDriver(driver);
@@ -56,6 +55,7 @@ public class DeliveryListService {
 	public Long createDeliveryList(String driver, String supplier) {
 		if (MessageValidator.areStringsValid(driver, supplier)) {
 		DeliveryList delivery = new DeliveryList(driver,supplier,0,false);
+		setQuantity(deliveryList);
 		deliveryRepository.save(delivery);
 		return delivery.getId();
 		} else {
@@ -65,12 +65,22 @@ public class DeliveryListService {
 	}
 	public void updateList(DeliveryList newDelivery) {
 		if(MessageValidator.isValidList(newDelivery)) {
-			deliveryList = deliveryRepository.findFirstById(newDelivery.getId());
+		deliveryList = deliveryRepository.findFirstById(newDelivery.getId());
 		deliveryList = newDelivery;
+		setQuantity(deliveryList);
 		deliveryRepository.save(deliveryList);
 		} else {
 			System.err.print("Not a valid list.");
 		}
-		
+	}
+	
+	private int getQuantitySum(Long id) {
+		return equipmentRepo.findAllByDeliveryListId(id).size();
+	}
+	private void setQuantity(List<DeliveryList> list) {
+		list.forEach((l)->l.setQuantitysum(getQuantitySum(l.getId()))); // Checks how many equipment is in the list. 
+	}
+	private void setQuantity(DeliveryList list) {
+		list.setQuantitysum(getQuantitySum(list.getId()));
 	}
 }
